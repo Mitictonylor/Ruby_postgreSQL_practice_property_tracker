@@ -19,9 +19,10 @@ house3 = Property.new({ 'number_of_bedrooms' => 5,
                         'build' => 'detached'
                       });
 house1.save()
+house2.save()
 house1.year_built = 1994
 house1.number_of_bedrooms = 4
 house1.update()
-
+house1.delete()
 binding.pry
 nil
