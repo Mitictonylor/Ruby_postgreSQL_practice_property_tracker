@@ -18,11 +18,14 @@ house3 = Property.new({ 'number_of_bedrooms' => 5,
                         'buy_let' => 'buy',
                         'build' => 'detached'
                       });
-house1.save()
-house2.save()
-house1.year_built = 1994
-house1.number_of_bedrooms = 4
-house1.update()
-house1.delete()
+# house1.save()
+# house2.save()
+# house1.year_built = 1994
+# house1.number_of_bedrooms = 4
+# house1.update()
+# house2.delete()
+house1.find()
+house3.save()
 binding.pry
+# house1.find(3)
 nil

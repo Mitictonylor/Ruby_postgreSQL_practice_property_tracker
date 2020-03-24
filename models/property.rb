@@ -54,5 +54,20 @@ class Property
     db.close
   end
 
-  
+  # def find(id)
+  #   db = PG.connect({dbname: 'properties', host:'localhost'})
+  #   command = "SELECT FROM properties WHERE id = $1"
+  #   value = [id]
+  #   db.prepare("find_one", command)
+  #   db.exec_prepared("find_one", value)
+  #   db.close
+  # end
+  def find()
+    db = PG.connect({dbname: 'properties', host:'localhost'})
+    command = "SELECT FROM properties WHERE id = $1"
+    value = [@id]
+    db.prepare("find_one", command)
+    db.exec_prepared("find_one", value)
+    db.close
+  end
 end
