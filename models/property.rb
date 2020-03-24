@@ -54,31 +54,35 @@ class Property
     db.close
   end
 
-  # def find(id)
+  def Property.find(id)
+    db = PG.connect({dbname: 'properties', host:'localhost'})
+    command = "SELECT FROM properties WHERE id = $1"
+    value = [id]
+    db.prepare("find_one", command)
+    house_found = db.exec_prepared("find_one", value)
+    db.close
+    property =house_found[0]
+    return Property.new(property)
+
+  end
+  # def find()
   #   db = PG.connect({dbname: 'properties', host:'localhost'})
-  #   command = "SELECT FROM properties WHERE id = $1"
-  #   value = [id]
+  #   command = "SELECT * FROM properties WHERE id = $1"
+  #   value = [@id]
   #   db.prepare("find_one", command)
   #   db.exec_prepared("find_one", value)
   #   db.close
   # end
-  def find()
-    db = PG.connect({dbname: 'properties', host:'localhost'})
-    command = "SELECT * FROM properties WHERE id = $1"
-    value = [@id]
-    db.prepare("find_one", command)
-    db.exec_prepared("find_one", value)
-    db.close
-  end
 
-  def find_by_year()
+  def find_by_year(year)
     db = PG.connect({dbname: 'properties', host:'localhost'})
     command = "SELECT FROM properties WHERE $1 = CASE
     WHEN year_built =$1 THEN $1
     ELSE null "
-    value = [@year_built]
-    db.prepare("find_one", command)
-    db.exec_prepared("find_one", value)
+    value = [year]
+    db.prepare("find_by_year", command)
+    houses_by_year = db.exec_prepared("find_by_year", value)
     db.close
+    return houses_by_year.map{ |property| Property.new(property)}
   end
 end
