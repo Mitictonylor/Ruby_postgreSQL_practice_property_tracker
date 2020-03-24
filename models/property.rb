@@ -64,8 +64,19 @@ class Property
   # end
   def find()
     db = PG.connect({dbname: 'properties', host:'localhost'})
-    command = "SELECT FROM properties WHERE id = $1"
+    command = "SELECT * FROM properties WHERE id = $1"
     value = [@id]
+    db.prepare("find_one", command)
+    db.exec_prepared("find_one", value)
+    db.close
+  end
+
+  def find_by_year()
+    db = PG.connect({dbname: 'properties', host:'localhost'})
+    command = "SELECT FROM properties WHERE $1 = CASE
+    WHEN year_built =$1 THEN $1
+    ELSE null "
+    value = [@year_built]
     db.prepare("find_one", command)
     db.exec_prepared("find_one", value)
     db.close

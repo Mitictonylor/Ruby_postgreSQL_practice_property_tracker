@@ -24,8 +24,10 @@ house3 = Property.new({ 'number_of_bedrooms' => 5,
 # house1.number_of_bedrooms = 4
 # house1.update()
 # house2.delete()
-house1.find()
+find_house=Property.find()
+p find_house
 house3.save()
 binding.pry
+houses = Property.find_by_year()
 # house1.find(3)
 nil
