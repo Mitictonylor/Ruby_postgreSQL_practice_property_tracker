@@ -27,6 +27,6 @@ house3 = Property.new({ 'number_of_bedrooms' => 5,
 Property.find(4) # or find_house = Property.find()
 house3.save()
 binding.pry
-Property.find_by_year() #or houses = Property.find_by_year()
+Property.find_by_year(1985) #or houses = Property.find_by_year()
 # house1.find(3)
 nil

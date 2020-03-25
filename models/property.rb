@@ -4,8 +4,8 @@ class Property
   attr_accessor :number_of_bedrooms, :year_built, :buy_let, :build
   attr_reader :id
   def initialize(houses)
-    @number_of_bedrooms = houses["number_of_bedrooms"]
-    @year_built = houses["year_built"]
+    @number_of_bedrooms = houses["number_of_bedrooms"].to_i
+    @year_built = houses["year_built"].to_i
     @buy_let = houses["buy_let"]
     @build = houses["build"]
     @id = houses["id"].to_i if houses['id']
@@ -74,15 +74,14 @@ class Property
   #   db.close
   # end
 
-  def find_by_year(year)
+  def Property.find_by_year(year)
     db = PG.connect({dbname: 'properties', host:'localhost'})
-    command = "SELECT FROM properties WHERE $1 = CASE
-    WHEN year_built =$1 THEN $1
-    ELSE null "
+    command = "SELECT FROM properties WHERE $1"
     value = [year]
     db.prepare("find_by_year", command)
     houses_by_year = db.exec_prepared("find_by_year", value)
     db.close
-    return houses_by_year.map{ |property| Property.new(property)}
+    property =houses_by_year[0]
+    return Property.new(property)
   end
 end
